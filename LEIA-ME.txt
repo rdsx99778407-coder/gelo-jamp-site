@@ -1,0 +1,102 @@
+============================================================
+  GELO JAMP — SITE OFICIAL
+  Site + painel administrativo (Netlify Functions + Turso)
+============================================================
+
+■ IDENTIDADE VISUAL
+
+  DESIGN.md                Direção visual, cores, tipografia,
+                           componentes e o que evitar. Leia antes
+                           de mudar a interface.
+
+■ ESTRUTURA DO PROJETO
+
+  public/                  Site publicado (o que vai para o ar)
+    index.html             Página inicial (hero, produtos, entrega,
+                           como pedir e contato com mapa)
+    produtos.html          Catálogo com pedido pelo WhatsApp
+    galeria.html           Galeria com filtros e ampliação
+    sobre.html             Página institucional
+    admin.html             Painel administrativo
+    404.html               Página de "não encontrado" (a Netlify
+                           usa sozinha; caminhos absolutos)
+    robots.txt, sitemap.xml   Indexação (domínio gelojamp.com.br)
+    favicon.ico, favicon-32.png, apple-touch-icon.png   Ícones
+    js/demo.js             Lógica do site
+    js/admin.js            Lógica do painel
+    css/estilos.css        Estilos
+    img/                   Fotos otimizadas (JPEG até 1200px +
+                           versão .webp de cada uma)
+
+  assets-originais/        Fotos originais em alta resolução (não
+                           vão para o ar). Para trocar uma foto,
+                           substitua aqui e gere de novo as versões
+                           otimizadas em public/img/.
+  netlify/functions/api.mjs   API (produtos, galeria, pedidos,
+                              configurações e login)
+  scripts/dev-server.mjs      Servidor local com recarga automática
+  netlify.toml                Configuração de publicação e cache
+
+■ VARIÁVEIS DE AMBIENTE (Netlify > Site configuration > Environment)
+
+  TURSO_DATABASE_URL   URL do banco Turso (libsql://...)
+  TURSO_AUTH_TOKEN     Token de acesso ao banco
+  ADMIN_SECRET         Texto longo e aleatório usado para
+                       assinar o login do painel
+
+  Para rodar localmente com o banco, crie um arquivo .env na
+  raiz do projeto com essas três variáveis (ele não vai para
+  o Git: está no .gitignore).
+
+■ RODAR LOCALMENTE
+
+  npm install
+  npm run dev
+
+  Abra http://localhost:8888 — a página recarrega sozinha a
+  cada alteração. Sem o .env, o site mostra os dados padrão
+  e o painel não consegue fazer login.
+
+■ PAINEL ADMINISTRATIVO (admin.html)
+
+  O acesso usa os usuários da tabela "User" do banco, com
+  senha criptografada (bcrypt). Nenhuma senha fica neste
+  arquivo. Use uma senha forte.
+
+  No painel você pode:
+  • Ver o resumo e os pedidos registrados
+  • Cadastrar / editar / excluir / ocultar produtos
+  • Informar preço quando houver (senão: "Consulte preço")
+  • Gerenciar as fotos da galeria
+  • Mudar o status dos pedidos
+  • Editar nome, endereço, cidade, região, WhatsApp,
+    Instagram e slogan — as mudanças aparecem no site
+
+■ PEDIDOS
+
+  Cada produto tem um botão "Pedir pelo WhatsApp", que abre
+  o WhatsApp com o nome e o peso do produto e registra o pedido no
+  painel. Nenhum pagamento é feito pelo site: a confirmação
+  acontece no WhatsApp com a empresa.
+
+■ INFORMAÇÕES OFICIAIS
+
+  Empresa:   Gelo Jamp — Distribuidora de Gelo
+  Endereço:  Rua Belo Horizonte, 87, Centro, Jampruca - MG
+  WhatsApp:  +55 33 98704-6287  (https://wa.me/5533987046287)
+  Instagram: https://www.instagram.com/gelo.jamp/
+  Entrega:   Jampruca e região
+
+■ LOCALIZAÇÃO (GOOGLE MAPS)
+
+  Link oficial: https://maps.app.goo.gl/Umq3PGaHRmf17bnr8
+  Coordenadas:  -18.4609012, -41.8069111
+
+  O mapa do site é centralizado nessas coordenadas (zoom 17).
+  "Abrir no Google Maps" usa o link oficial; "Como chegar"
+  traça a rota até as coordenadas.
+
+■ PREÇOS
+
+  Nenhum preço foi inventado: os produtos aparecem como
+  "Consulte preço" até que o administrador informe um valor.

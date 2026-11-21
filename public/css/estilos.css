@@ -1,0 +1,571 @@
+/* ============================================================
+   GELO JAMP — Site da distribuidora
+   Direção visual: "rótulo de saco de gelo" — tipografia larga e
+   pesada como a etiqueta da embalagem, cores do freezer e da água,
+   um único acento quente (sol) para a entrega na região.
+   Todas as combinações de texto/fundo passam no contraste AA.
+   ============================================================ */
+:root{
+  /* Nomes mantidos da versão anterior para não mexer em cada regra */
+  --escuro:#0A2540;      /* tinta: textos e fundos escuros */
+  --escuro2:#12345A;
+  --gelo:#EEF7FD;        /* fundo claro */
+  --claro:#0B5FB0;       /* azul Jamp: links e botões (branco sobre ele 6,4:1) */
+  --claro-hover:#094E91;
+  --claro2:#BFE3F8;      /* água: detalhes e bordas fortes */
+  --sol:#FFC531;         /* acento único: entrega na região */
+  --branco:#ffffff;
+  --texto:#1E3348;
+  --texto-suave:#4A6078; /* 6,5:1 no branco */
+  --linha:#D9E8F3;
+  --verde:#0E7A3D;       /* botão de pedido (branco sobre ele 5,4:1) */
+  --verde2:#0B6532;
+  --sombra:0 14px 32px rgba(10,37,64,.12);
+  --sombra-suave:0 4px 14px rgba(10,37,64,.07);
+  --raio:16px;
+  --trans:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease,transform .2s ease;
+  --h2-secao:clamp(1.9rem,3.4vw,2.6rem);   /* títulos de seção */
+  --h2-painel:clamp(1.7rem,3vw,2.3rem);   /* títulos dentro de painéis escuros */
+  --fonte:"Archivo","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+
+/* Reset base */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--fonte);
+  color:var(--texto);background:var(--branco);line-height:1.65;
+}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+a,button,input,select,textarea,label{touch-action:manipulation}
+h1,h2,h3{font-stretch:112%;text-wrap:balance}
+p{text-wrap:pretty}
+.container{width:min(1200px,92%);margin-inline:auto}
+
+/* Âncoras não ficam escondidas sob o cabeçalho fixo */
+[id]{scroll-margin-top:96px}
+
+/* Foco visível e consistente (anel azul com folga branca, legível em fundo claro e escuro) */
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:3px solid var(--claro);outline-offset:2px;box-shadow:0 0 0 2px #fff;
+}
+
+/* Link "pular para o conteúdo" — aparece só ao receber foco pelo teclado */
+.pular{position:absolute;left:12px;top:-60px;z-index:1000;background:var(--escuro);color:#fff;
+  padding:12px 18px;border-radius:10px;font-weight:700;transition:top .2s ease}
+.pular:focus{top:12px}
+
+/* ---------- Cabeçalho: "rótulo do saco de gelo" ----------
+   Marca escrita em tipo largo à esquerda, alinhada ao conteúdo da página; menu agrupado à direita;
+   bloco verde de pedido na altura toda, encostado na borda da tela, como a faixa de uma etiqueta. */
+.topo{
+  --altura-topo:76px;
+  position:sticky;top:0;z-index:200;
+  background:#fff;border-bottom:1px solid var(--linha);
+}
+/* Mesmo recuo à esquerda do .container das seções; à direita, nenhum (o bloco encosta na borda) */
+.topo .container{width:auto;margin:0;display:flex;align-items:stretch;height:var(--altura-topo);
+  padding-left:max(4%, calc((100% - 1200px) / 2))}
+.marca{display:flex;align-items:center;gap:12px;min-width:0;margin-right:auto}
+.marca img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex:none}
+.marca .nome{font-weight:900;font-stretch:125%;font-size:1.6rem;color:var(--escuro);letter-spacing:-.5px;line-height:1}
+.marca .sub{font-size:.82rem;color:var(--texto-suave);margin-top:3px}
+.menu{display:flex;gap:30px;align-items:center;margin-right:36px}
+.menu a{font-weight:600;font-size:1rem;color:#3B5268;position:relative;padding:6px 0;transition:color .2s ease}
+.menu a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:3px;background:var(--claro);transition:width .25s ease}
+.menu a:hover{color:var(--escuro)}
+.menu a:hover::after,.menu a.ativo::after{width:100%}
+.menu a.ativo{color:var(--claro)}
+.acoes-topo{display:flex;align-items:stretch}
+.menu-mobile{display:none;align-self:center;background:none;border:0;font-size:1.8rem;line-height:1;color:var(--escuro);cursor:pointer;
+  width:48px;height:48px;border-radius:10px;margin-right:10px}
+.menu-mobile:hover{background:var(--gelo)}
+/* Bloco de pedido: alvo grande (altura toda), verde = WhatsApp (DESIGN.md) */
+.cta-topo{display:flex;align-items:center;gap:10px;padding:0 30px;background:var(--verde);color:#fff;
+  font-weight:800;font-size:1rem;white-space:nowrap;transition:background-color .2s ease}
+.cta-topo svg{width:22px;height:22px;flex:none}
+.cta-topo:hover{background:var(--verde2)}
+/* Foco por dentro do bloco: por fora ele ficaria cortado pela borda da tela */
+.cta-topo:focus-visible{outline:3px solid #fff;outline-offset:-7px;box-shadow:none}
+
+/* ---------- Botões ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 28px;border-radius:10px;font-weight:700;font-size:1rem;font-family:inherit;
+  border:0;cursor:pointer;transition:var(--trans);white-space:nowrap;
+}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-gelo{background:var(--claro);color:#fff}
+.btn-gelo:hover{background:var(--claro-hover)}
+.btn-escuro{background:var(--escuro);color:#fff}
+.btn-escuro:hover{background:var(--escuro2)}
+.btn-whats{background:var(--verde);color:#fff}
+.btn-whats:hover{background:var(--verde2)}
+.btn-outline{background:#fff;border:2px solid var(--claro2);color:var(--escuro)}
+.btn-outline:hover{border-color:var(--claro);background:var(--gelo)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.7;cursor:progress}
+.btn-mini{padding:10px 18px;border-radius:8px;font-size:.9rem}
+.btn-full{width:100%}
+
+/* ---------- Hero ---------- */
+.hero{background:var(--gelo);padding:72px 0 96px}
+.hero .container{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+/* Selo da entrega: o único uso do acento "sol" */
+.selo{display:inline-flex;align-items:center;gap:.3em;flex-wrap:wrap;background:var(--sol);color:var(--escuro);
+  font-size:.92rem;font-weight:700;padding:8px 16px;border-radius:999px}
+.hero h1{font-size:clamp(2.8rem,6.5vw,5rem);font-weight:900;font-stretch:125%;line-height:.98;color:var(--escuro);letter-spacing:-1.5px;margin:22px 0 12px}
+.hero .chamada-principal{font-size:clamp(1.35rem,2.4vw,1.8rem);color:var(--claro);font-weight:700;font-stretch:100%;line-height:1.3;margin:0 0 12px;max-width:22ch}
+.hero p.lead{font-size:1.2rem;color:var(--texto-suave);max-width:52ch;margin-bottom:34px}
+.hero .botoes{display:flex;gap:14px;flex-wrap:wrap}
+.hero .foto{position:relative;max-width:440px;justify-self:end;width:100%}
+.hero .foto .quadro{border-radius:20px;overflow:hidden;box-shadow:var(--sombra);aspect-ratio:4/5}
+.hero .foto .quadro img{width:100%;height:100%;object-fit:cover}
+.hero .foto .tag{
+  position:absolute;bottom:16px;left:16px;background:#fff;border-radius:10px;border:1.5px solid var(--escuro);
+  padding:12px 18px 12px 12px;display:flex;gap:12px;align-items:center;
+}
+.hero .foto .tag .ic{width:46px;height:46px;border-radius:10px;background:var(--verde);
+  display:grid;place-items:center;color:#fff}
+.hero .foto .tag .ic svg{width:24px;height:24px}
+.hero .foto .tag small{display:block;color:var(--texto-suave);font-size:.82rem}
+.hero .foto a.tag{transition:var(--trans)}
+.hero .foto a.tag:hover{background:var(--gelo)}
+.hero .foto .tag strong{color:var(--escuro);font-size:1.06rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- Seções ---------- */
+section{padding:88px 0}
+.titulo-centro{max-width:720px;margin:0 0 52px}
+.titulo-centro h2{font-size:var(--h2-secao);color:var(--escuro);letter-spacing:-.5px;line-height:1.1;margin:0 0 14px}
+.titulo-centro p{color:var(--texto-suave);max-width:60ch}
+.titulo-linha{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-bottom:44px;flex-wrap:wrap}
+.titulo-linha h2{font-size:var(--h2-secao);color:var(--escuro);letter-spacing:-.5px;line-height:1.1}
+.link-todo{display:inline-block;padding:10px 0;color:var(--claro);font-weight:700;font-size:1rem;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.link-todo:hover{color:var(--claro-hover)}
+
+/* Como pedir: 3 passos em sequência (ordem da lista <ol>), separados pela borda superior */
+.passos{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;counter-reset:none}
+.passos li{border-top:3px solid var(--escuro);padding-top:20px}
+.passos h3{color:var(--escuro);font-size:1.2rem;margin-bottom:8px}
+.passos p{color:var(--texto-suave);line-height:1.7;max-width:38ch}
+
+/* Produtos — o peso, em tipo largo e pesado, é o elemento marcante (como no saco de gelo) */
+.produtos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.card-produto{background:#fff;border:1px solid var(--linha);border-radius:var(--raio);overflow:hidden;transition:var(--trans);display:flex;flex-direction:column}
+.card-produto:hover{border-color:var(--claro2);box-shadow:var(--sombra-suave)}
+.card-produto .ft{position:relative;background:var(--escuro);aspect-ratio:5/4;overflow:hidden}
+.card-produto .ft img{width:100%;height:100%;object-fit:cover}
+.card-produto .tag-foto{position:absolute;top:14px;left:14px;background:rgba(10,37,64,.85);color:#fff;
+  font-size:.8rem;font-weight:600;padding:5px 12px;border-radius:999px}
+.card-produto .cx{padding:24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card-produto .peso{order:-1;color:var(--escuro);font-weight:900;font-stretch:125%;font-size:clamp(1.9rem,3vw,2.4rem);line-height:1;letter-spacing:-.5px}
+.card-produto h3{color:var(--claro);font-size:1.15rem;font-stretch:100%}
+.card-produto p{font-size:.98rem;color:var(--texto-suave);flex:1;line-height:1.7}
+/* .rodape também é a classe do rodapé do site: zera fundo/cor herdados dele */
+.card-produto .rodape{display:flex;flex-direction:column;align-items:stretch;gap:14px;margin-top:auto;padding-top:18px;
+  border-top:1px solid var(--linha);background:none;color:inherit}
+.card-produto .preco{font-weight:800;color:var(--escuro);font-size:1.12rem;font-variant-numeric:tabular-nums}
+.card-produto .preco small{display:block;font-size:.85rem;color:var(--texto-suave);font-weight:500}
+.card-produto .btn-pedir{width:100%;padding:16px 18px;font-size:1rem;min-height:52px}
+.card-produto .btn-pedir svg{width:22px;height:22px}
+
+
+/* Região */
+.regiao-card{position:relative;isolation:isolate;overflow:hidden;background:var(--escuro);border-radius:24px;padding:52px;color:#fff;
+  display:grid;grid-template-columns:auto 1fr auto;gap:36px;align-items:center}
+.regiao-card h2{font-size:var(--h2-painel);letter-spacing:-.5px;line-height:1.1;margin-bottom:12px}
+.regiao-card p{color:#CFE3F8;font-size:1.1rem;max-width:48ch;line-height:1.7}
+.regiao-card .pin{order:-1;width:88px;height:88px;border-radius:50%;background:var(--sol);color:var(--escuro);display:grid;place-items:center}
+.regiao-card .pin svg{width:42px;height:42px}
+/* Curvas de nível presas ao alfinete: o ponto (100,255) do SVG, centro do "morro", fica sempre
+   sob o ícone, em qualquer largura. O card corta o excesso (overflow) e o isolation mantém o
+   desenho atrás do texto, mas acima do fundo azul. */
+.regiao-card .pin{position:relative}
+.regiao-card .pin::before{content:"";position:absolute;left:50%;top:50%;width:1200px;height:900px;
+  margin:-255px 0 0 -100px;background:url("../img/contorno.svg") no-repeat;z-index:-1;pointer-events:none}
+.regiao-card .btn{background:#fff;color:var(--escuro)}
+.regiao-card .btn:hover{background:var(--gelo)}
+
+/* ---------- Galeria ---------- */
+.galeria-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.galeria-grid .foto-g{position:relative;display:block;width:100%;padding:0;border:0;font:inherit;text-align:left;
+  border-radius:var(--raio);overflow:hidden;cursor:zoom-in;aspect-ratio:4/3.4;background:var(--escuro)}
+.galeria-grid .foto-g img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.galeria-grid .foto-g:hover img{transform:scale(1.04)}
+.galeria-grid .legenda{position:absolute;inset:auto 0 0 0;padding:30px 18px 16px;color:#fff;font-weight:600;font-size:1rem;
+  background:linear-gradient(transparent,rgba(10,37,64,.88));opacity:0;transition:opacity .25s ease}
+.galeria-grid .foto-g:hover .legenda,.galeria-grid .foto-g:focus-visible .legenda{opacity:1}
+@media (hover:none){.galeria-grid .legenda{opacity:1}}
+.filtros{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
+.filtro{padding:10px 20px;min-height:44px;border-radius:999px;border:1.5px solid var(--claro2);background:#fff;color:#3B5268;
+  font-weight:600;font-size:.95rem;font-family:inherit;cursor:pointer;transition:var(--trans)}
+.filtro:hover{border-color:var(--claro);color:var(--escuro)}
+.filtro.ativo{background:var(--escuro);border-color:var(--escuro);color:#fff}
+.lightbox{position:fixed;inset:0;background:rgba(6,16,28,.92);z-index:500;display:none;place-items:center;padding:24px;overscroll-behavior:contain}
+.lightbox.aberto{display:grid}
+.lightbox figure{max-width:950px;width:100%;background:#fff;border-radius:20px;padding:18px;position:relative}
+.lightbox img{max-height:74vh;width:100%;object-fit:contain;border-radius:12px}
+.lightbox figcaption{text-align:center;padding-top:14px;font-weight:700;color:var(--escuro)}
+.lightbox .fechar{position:absolute;top:-16px;right:-16px;width:48px;height:48px;border-radius:50%;
+  background:var(--escuro);color:#fff;border:2px solid #fff;font-size:1.2rem;cursor:pointer;box-shadow:var(--sombra);transition:var(--trans)}
+.lightbox .fechar:hover{background:var(--escuro2)}
+
+/* ---------- Sobre ---------- */
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:62px;align-items:start}
+/* Sobre: texto corrido e uma lista curta de fatos, sem cartões */
+.sobre-texto h2{font-size:var(--h2-secao);color:var(--escuro);letter-spacing:-.5px;line-height:1.1;margin-bottom:18px}
+.sobre-texto p{color:var(--texto);line-height:1.8;max-width:60ch;margin-bottom:14px}
+.fatos{margin-top:28px;display:grid;gap:0}
+.fatos div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--linha)}
+.fatos div:first-child{border-top:3px solid var(--escuro)}
+.fatos dt{font-weight:800;color:var(--escuro)}
+.fatos dd{color:var(--texto-suave)}
+.sobre-lateral{background:var(--gelo);border:1px solid var(--claro2);border-radius:24px;padding:40px}
+.sobre-lateral .linha{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px}
+.sobre-lateral .linha .ic{width:46px;height:46px;flex:none;border-radius:10px;background:#fff;color:var(--claro);
+  display:grid;place-items:center}
+.sobre-lateral .linha .ic svg{width:24px;height:24px}
+.sobre-lateral h3{color:var(--escuro);font-size:1.3rem;margin-bottom:22px}
+
+/* ---------- Rodapé ---------- */
+/* Rodapé: "verso da etiqueta" — marca escrita, dados da distribuidora como campos e uma linha final */
+footer.rodape{background:var(--escuro);color:#CFE3F8;margin-top:38px}
+footer.rodape a{transition:color .2s ease}
+.rodape-topo{display:flex;justify-content:space-between;align-items:center;gap:24px 48px;padding:64px 0 40px;flex-wrap:wrap}
+.rodape-marca{display:inline-flex;align-items:center;gap:16px;color:#fff}
+.rodape-marca img{width:56px;height:56px;border-radius:12px;object-fit:cover;flex:none}
+.rodape-nome{font-weight:900;font-stretch:125%;font-size:clamp(2.2rem,4.6vw,3.4rem);line-height:1;letter-spacing:-1px}
+.rodape-slogan{margin-top:14px;font-size:1.1rem;color:#CFE3F8;max-width:42ch}
+.rodape-cta{padding:16px 28px}
+.rodape-dados{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:0 32px}
+.rodape-dados div{border-top:1px solid rgba(191,227,248,.28);padding:16px 0 28px;min-width:0}
+.rodape-dados dt{font-size:.85rem;font-weight:700;color:#9DBBDB;margin-bottom:6px}
+.rodape-dados dd{color:#fff;font-size:1rem;line-height:1.5}
+.rodape-dados a{color:#fff;text-decoration:underline;text-decoration-color:rgba(191,227,248,.45);text-underline-offset:4px}
+.rodape-dados a:hover{text-decoration-color:#fff}
+footer.rodape .base{border-top:1px solid rgba(191,227,248,.28);padding:22px 0 28px;display:flex;justify-content:space-between;align-items:center;
+  gap:14px 32px;font-size:.9rem;color:#9DBBDB;flex-wrap:wrap}
+.rodape-nav{display:flex;flex-wrap:wrap;gap:4px 24px}
+.rodape-nav a{color:#CFE3F8;font-weight:600;font-size:.95rem;padding:8px 0}
+.rodape-nav a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%) translateY(24px);
+  background:var(--escuro);color:#fff;padding:15px 24px;border-radius:12px;font-size:.96rem;
+  box-shadow:var(--sombra);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;z-index:700;max-width:92%}
+.toast.mostrar{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ============================================================
+   Seção Mapa e Contato
+   ============================================================ */
+.mapa-contato{background:var(--gelo)}
+.mapa-titulo{max-width:760px;margin:0 0 48px}
+.mapa-titulo h2{font-size:var(--h2-secao);color:var(--escuro);letter-spacing:-.5px;line-height:1.1;margin:0 0 14px}
+.mapa-titulo p{color:var(--texto-suave);max-width:60ch}
+
+.mapa-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+
+.mapa-info{background:#fff;border:1px solid var(--linha);border-radius:20px;padding:40px}
+.mapa-info h3{font-size:1.5rem;line-height:1.2;color:var(--escuro);margin-bottom:12px}
+.mapa-info p{color:var(--texto-suave);margin-bottom:34px}
+.info-bloco{display:flex;flex-direction:column;gap:18px;margin-bottom:34px}
+.info-item{display:flex;gap:16px;align-items:flex-start}
+.info-item svg{width:24px;height:24px;color:var(--claro);flex:none;margin-top:4px}
+.info-item div strong{display:block;color:var(--escuro);font-size:1rem}
+.info-item div span{color:var(--texto-suave);font-size:.98rem}
+.mapa-botoes{display:flex;gap:12px;flex-wrap:wrap}
+
+.mapa-wrapper{border-radius:20px;border:1px solid var(--linha);overflow:hidden}
+.mapa-wrapper iframe{display:block;border-radius:20px}
+
+/* ---------- Seção Contato ---------- */
+.contato-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.contato-dados{background:#fff;border:1px solid var(--linha);border-radius:26px;padding:40px;box-shadow:var(--sombra-suave)}
+.contato-dados h2{font-size:1.9rem;color:var(--escuro);margin-bottom:12px}
+.contato-dados p{color:var(--texto-suave);margin-bottom:30px}
+.contato-botoes{display:flex;gap:12px;flex-wrap:wrap}
+.contato-mapa{background:#fff;border-radius:20px;border:1px solid var(--linha);overflow:hidden}
+.contato-mapa h3{font-size:1.4rem;color:var(--escuro);padding:26px 26px 0;margin:0}
+.contato-mapa p{padding:4px 26px 22px;color:var(--texto-suave)}
+.contato-mapa #mapa-embed{min-height:360px}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:980px){
+  .hero .container{grid-template-columns:1fr;gap:48px}
+  .hero .foto{justify-self:start}
+  .produtos-grid{grid-template-columns:repeat(2,1fr)}
+  .galeria-grid{grid-template-columns:repeat(2,1fr)}
+  .sobre-grid{grid-template-columns:1fr}
+  .regiao-card{grid-template-columns:1fr;justify-items:start}
+  .mapa-grid{grid-template-columns:1fr}
+  .contato-grid{grid-template-columns:1fr}
+}
+/* Entre 1001 e 1180px: espaços mais justos para marca + 5 links + bloco de pedido caberem sem encostar */
+@media (max-width:1180px){
+  .menu{gap:22px;margin-right:24px}
+  .cta-topo{padding:0 22px}
+}
+/* Até 1000px o menu recolhe no botão ☰: abaixo disso marca, links e bloco se sobrepõem */
+@media (max-width:1000px){
+  .menu{display:none;position:fixed;inset:var(--altura-topo) 0 auto 0;margin:0;background:#fff;flex-direction:column;align-items:stretch;
+    padding:16px 4%;gap:4px;box-shadow:var(--sombra);border-bottom:1px solid var(--linha);
+    max-height:calc(100dvh - var(--altura-topo));overflow-y:auto;overscroll-behavior:contain}
+  .menu.aberto{display:flex}
+  .menu a{padding:14px;border-radius:10px;font-size:1.05rem}
+  .menu a::after{display:none}
+  .menu a:hover,.menu a.ativo{background:var(--gelo)}
+  .menu-mobile{display:grid;place-items:center}
+}
+@media (max-width:720px){
+  /* Celular: cabeçalho mais baixo e bloco de pedido só com o ícone (o texto continua para leitores de tela) */
+  .topo{--altura-topo:64px}
+  .marca img{width:42px;height:42px}
+  .marca .nome{font-size:1.35rem}
+  .cta-topo{padding:0 22px}
+  .cta-topo svg{width:26px;height:26px}
+  .cta-topo-texto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .marca .sub{display:none}
+  .passos,.produtos-grid,.galeria-grid{grid-template-columns:1fr}
+  .passos{gap:24px}
+  .fatos div{grid-template-columns:1fr;gap:2px}
+  .hero{padding:44px 0 72px}
+  .hero .foto{max-width:none}
+  .hero .foto .tag{left:12px;bottom:12px}
+  section{padding:64px 0}
+  .sobre-lateral{padding:28px}
+  .regiao-card{padding:32px 26px;gap:22px}
+  .regiao-card .btn{width:100%;white-space:normal;text-align:center}
+  .mapa-info{padding:28px 22px}
+  .mapa-botoes .btn{flex:1 1 100%}
+  .caixa-acao{flex-wrap:wrap}
+}
+
+/* ============================================================
+   Estilos gerais
+   ============================================================ */
+.admin-body{display:flex;min-height:100vh;background:#F2F6FA}
+.admin-lateral{width:250px;flex:none;background:var(--escuro);color:#9fc3e8;display:flex;flex-direction:column;padding:24px 16px;position:sticky;top:0;height:100vh}
+.admin-lateral .marca{margin-bottom:28px;padding:0 8px}
+.admin-lateral .marca .nome{color:#fff}
+.admin-lateral .marca .sub{color:#B9D4F2}
+.admin-lateral nav{display:grid;gap:6px;flex:1;align-content:start}
+.admin-lateral nav button{
+  display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;border:0;
+  background:transparent;color:#9fc3e8;font-weight:700;font-size:.96rem;cursor:pointer;text-align:left;transition:var(--trans);width:100%;
+}
+.admin-lateral nav button svg{width:20px;height:20px}
+.admin-lateral nav button:hover{background:rgba(191,227,248,.14);color:#fff}
+.admin-lateral nav button.ativo{background:var(--claro);color:#fff}
+.admin-lateral .rodape-lat{border-top:1px solid rgba(159,195,232,.18);padding-top:18px}
+.admin-lateral .usuario{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.admin-lateral .usuario .avatar{width:40px;height:40px;border-radius:14px;background:var(--claro);color:#fff;
+  display:grid;place-items:center;font-weight:800}
+.admin-lateral .usuario small{display:block;color:#6b8db5;font-size:.76rem}
+.admin-lateral .usuario strong{color:#fff;font-size:.9rem}
+.btn-sair{width:100%;background:rgba(244,63,94,.15);color:#fb7185;border:0;padding:12px;border-radius:14px;
+  font-weight:800;cursor:pointer;display:flex;gap:12px;align-items:center;justify-content:center;transition:var(--trans)}
+.btn-sair:hover{background:rgba(244,63,94,.28)}
+.btn-sair svg{width:18px;height:18px}
+.admin-principal{flex:1;padding:34px 38px;max-width:1250px}
+.admin-topo{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:30px;flex-wrap:wrap}
+.admin-topo h1{color:var(--escuro);font-size:1.7rem;letter-spacing:-.4px}
+.admin-topo p{color:var(--texto-suave);font-size:.98rem}
+.secao-admin{display:none}
+.secao-admin.ativa{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:32px}
+.stat{background:#fff;border-radius:16px;padding:20px 22px;border:1px solid var(--linha);border-top:3px solid var(--escuro);display:flex;flex-direction:column;gap:6px}
+.stat small{color:var(--texto-suave);font-weight:700;font-size:.88rem;display:block}
+.stat strong{color:var(--escuro);font-weight:900;font-stretch:125%;font-size:2.2rem;line-height:1}
+.painel-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;align-items:start}
+.caixa{background:#fff;border:1px solid var(--linha);border-radius:22px;padding:28px}
+.caixa h2,.caixa h3{color:var(--escuro);font-size:1.1rem;font-stretch:100%;margin-bottom:22px}
+.tabela{width:100%;border-collapse:collapse;font-size:.94rem}
+.tabela th{text-align:left;color:var(--texto-suave);font-size:.8rem;letter-spacing:.2px;
+  padding:12px 10px;border-bottom:1.5px solid var(--linha)}
+.tabela td{padding:14px 10px;border-bottom:1px solid var(--linha);vertical-align:middle}
+.tabela tr:hover td{background:#F7FAFD}
+.tabela .ft-mini{width:50px;height:50px;border-radius:12px;object-fit:cover;background:#E3F2FD}
+.badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:.78rem;font-weight:800}
+.badge.azul{background:var(--gelo);color:#1565C0}
+.badge.verde{background:#E8F8EE;color:#15803d}
+.badge.cinza{background:var(--linha);color:var(--texto-suave)}
+.badge.vermelho{background:#FDECEE;color:#be123c}
+.linhas-info{display:grid;gap:14px;font-size:.94rem}
+.linhas-info div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--linha);padding-bottom:13px}
+.linhas-info span{color:var(--texto-suave)}
+.linhas-info b{color:var(--escuro)}
+.acao-mini{border:0;background:none;cursor:pointer;font-size:1rem;padding:10px 12px;border-radius:10px;transition:var(--trans);display:inline-grid;place-items:center;vertical-align:middle}
+.acao-mini.editar{color:#1565C0}.acao-mini.editar:hover{background:var(--gelo)}
+.acao-mini.excluir{color:#be123c}.acao-mini.excluir:hover{background:#FDECEE}
+.alternar{width:46px;height:26px;border-radius:999px;background:#CBD5E1;border:0;position:relative;cursor:pointer;transition:var(--trans)}
+.alternar::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:var(--trans)}
+.alternar.on{background:var(--verde)}
+.alternar.on::after{left:24px}
+.galeria-admin{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.galeria-admin .item{position:relative;border-radius:20px;overflow:hidden;background:#0b1220;aspect-ratio:4/3.4}
+.galeria-admin .item img{width:100%;height:100%;object-fit:cover}
+.galeria-admin .info{position:absolute;inset:auto 0 0 0;background:linear-gradient(transparent,rgba(15,28,46,.9));
+  color:#fff;padding:26px 16px 14px;font-size:.86rem;font-weight:700}
+.galeria-admin .info small{display:block;color:#9fc3e8;font-weight:500}
+.galeria-admin .acoes{position:absolute;top:12px;right:12px;display:flex;gap:8px;opacity:0;transition:opacity .2s ease}
+.galeria-admin .item:hover .acoes{opacity:1}
+.galeria-admin .acoes button{background:rgba(15,28,46,.78);border:0;color:#fff;width:36px;height:36px;
+  border-radius:11px;cursor:pointer;display:grid;place-items:center;font-size:1rem}
+.galeria-admin .acoes button:hover{background:var(--claro)}
+.galeria-admin .inativa{opacity:.45}
+.form-linha{display:grid;gap:8px;margin-bottom:18px}
+.form-linha label{font-weight:800;font-size:.88rem;color:#41586f}
+.form-linha input,.form-linha select,.form-linha textarea{
+  border:1.5px solid #D7E3EE;border-radius:14px;padding:14px 16px;font-size:.96rem;font-family:inherit;color:var(--escuro);
+  background:#fff;transition:var(--trans);width:100%;
+}
+.form-linha input:focus,.form-linha select:focus,.form-linha textarea:focus{outline:0;border-color:var(--claro);box-shadow:0 0 0 4px rgba(191,227,248,.14)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.caixa-acao{display:flex;gap:14px;justify-content:flex-end;margin-top:12px}
+select.status-pedido{border:0;border-radius:999px;padding:7px 14px;font-weight:800;font-size:.82rem;cursor:pointer}
+select.status-NOVO{background:var(--gelo);color:#1565C0}
+select.status-CONFIRMADO{background:#E8F8EE;color:#15803d}
+select.status-ENTREGUE{background:#E0F7EA;color:#0f766e}
+select.status-CANCELADO{background:#FDECEE;color:#be123c}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(6,12,20,.64);backdrop-filter:blur(5px);z-index:550;display:none;place-items:center;padding:24px}
+.modal.aberto{display:grid}
+.modal .janela{background:#fff;border-radius:24px;padding:34px;width:min(520px,100%);max-height:92vh;overflow:auto}
+.modal .janela h2{color:var(--escuro);font-size:1.4rem;margin-bottom:24px}
+
+/* Login admin */
+.login-fundo{min-height:100vh;display:grid;place-items:center;padding:20px;
+  background:var(--escuro)}
+.login-caixa{width:min(460px,100%);background:#fff;border-radius:28px;padding:42px;box-shadow:0 34px 88px rgba(0,0,0,.45)}
+.login-caixa .logo-top{width:100px;border-radius:24px;margin:0 auto 22px}
+.login-caixa h1{text-align:center;color:var(--escuro);font-size:1.5rem}
+.login-caixa .sub{text-align:center;color:var(--texto-suave);font-size:.94rem;margin-bottom:30px}
+.login-caixa .dica{margin-top:24px;background:var(--gelo);border:1px dashed #90CAF9;border-radius:16px;
+  padding:16px 18px;font-size:.88rem;color:#1565C0;text-align:center}
+.login-erro{background:#FDECEE;color:#be123c;border-radius:14px;padding:14px 17px;font-size:.92rem;margin-bottom:16px;display:none}
+.login-erro.mostrar{display:block}
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+
+/* ---------- Painel: teclado, toque e telas menores ---------- */
+.caixa{overflow-x:auto}
+.modal .janela{overscroll-behavior:contain}
+.galeria-admin .item:focus-within .acoes{opacity:1}
+@media (hover:none){.galeria-admin .acoes{opacity:1}}
+.tabela td,.tabela th{white-space:nowrap}
+.tabela td:nth-child(2){white-space:normal;min-width:160px}
+.stat strong{font-variant-numeric:tabular-nums}
+@media (max-width:980px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .galeria-admin{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:560px){
+  .stats{grid-template-columns:1fr 1fr;gap:12px}
+  .stat{padding:16px;gap:12px}
+  .galeria-admin{grid-template-columns:repeat(2,1fr);gap:12px}
+  .login-caixa{padding:30px 22px}
+  .modal .janela{padding:24px 20px}
+}
+
+/* Responsivo do painel: precisa vir DEPOIS das regras base do painel, senão elas anulam estas */
+@media (max-width:980px){
+  .admin-lateral{width:80px;padding:18px 10px}
+  .admin-lateral .marca .nome,.admin-lateral .marca .sub,
+  .admin-lateral nav button span,.admin-lateral .usuario .txt{display:none}
+  .admin-principal{padding:22px 16px}
+  .form-2col{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .admin-body{flex-direction:column}
+  .admin-lateral{width:100%;height:auto;position:static;flex-direction:row;align-items:center;overflow-x:auto}
+  .admin-lateral nav{display:flex;flex:1}
+  .admin-lateral nav button span{display:none}
+  .admin-lateral .rodape-lat{border:0;padding:0}
+  .admin-lateral .usuario{display:none}
+  .admin-principal{padding:22px 16px}
+  .admin-lateral{padding:10px 12px;gap:8px}
+  .admin-lateral .marca{margin:0;padding:0}
+  .admin-lateral nav{gap:4px}
+  .admin-lateral nav button{padding:12px;width:auto;justify-content:center}
+  .btn-sair{width:auto;padding:12px 14px}
+}
+
+/* ---------- Formulários do painel: ajuda, erro em linha, checkbox e prévia de imagem ---------- */
+.ajuda{display:block;color:var(--texto-suave);font-size:.85rem;font-weight:400;line-height:1.45}
+.erro-campo{color:#B42318;font-size:.88rem;font-weight:600;margin:0}
+.form-linha input[aria-invalid="true"]{border-color:#B42318;box-shadow:0 0 0 3px rgba(180,35,24,.14)}
+/* Rótulo e caixa formam um só alvo de clique, com altura mínima de toque */
+.form-check{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:10px 12px;margin-bottom:12px;
+  border:1.5px solid var(--linha);border-radius:12px;cursor:pointer;font-weight:700;font-size:.92rem;color:#3B5268}
+.form-check:hover{border-color:var(--claro2)}
+.form-check input{width:20px;height:20px;margin-top:1px;flex:none;accent-color:var(--claro)}
+.form-check .ajuda{margin-top:2px}
+.campo-imagem{display:flex;gap:12px;align-items:center}
+.previa-imagem{width:64px;height:64px;flex:none;border-radius:10px;object-fit:cover;background:var(--gelo);border:1px solid var(--linha)}
+.previa-imagem:not([src]),.previa-imagem[src=""]{visibility:hidden}
+
+/* Botões de ícone do painel com alvo de 44px (Fitts / WCAG 2.5.8) */
+.acao-mini{min-width:44px;min-height:44px}
+.galeria-admin .acoes button{width:44px;height:44px}
+
+
+/* <picture> não cria caixa própria: os layouts continuam valendo para a <img> de dentro */
+picture{display:contents}
+/* Com display:contents o <source> viraria item invisível do flex e receberia o gap antes da imagem */
+picture > source{display:none}
+
+/* Cabeçalho das páginas internas (antes em estilos inline em cada página) */
+.hero-interna{padding:52px 0 60px}
+.hero-interna .container{grid-template-columns:1fr}
+.hero-interna h1{font-size:clamp(2.2rem,5vw,3.4rem);margin-top:0}
+@media (max-width:720px){.hero-interna{padding:40px 0 44px}}
+
+/* Página 404: o número no mesmo tipo largo e pesado do peso dos produtos */
+.pagina-404{min-height:calc(100dvh - 80px - 120px);display:grid;align-items:center}
+.codigo-404{font-weight:900;font-stretch:125%;font-size:clamp(4.5rem,16vw,9rem);line-height:.9;color:var(--claro);letter-spacing:-3px;margin-bottom:8px}
+
+/* Texto só para leitores de tela (mantém a ordem dos títulos sem repetir o que já está visível) */
+.visualmente-oculto{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* Nome da cidade ("Jampruca - MG") nunca se parte em duas linhas */
+[data-cidade],.sem-quebra{white-space:nowrap}
+
+/* Link de texto (Instagram no bloco de contato) */
+.link-texto{color:var(--claro);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.link-texto:hover{color:var(--claro-hover)}
+
+/* Telas muito estreitas (até 380px): marca, botão do menu e bloco de pedido precisam caber em ~300px */
+@media (max-width:380px){
+  .marca{gap:10px}
+  .marca img{width:38px;height:38px}
+  .marca .nome{font-size:1.15rem}
+  .menu-mobile{margin-right:4px;width:44px;height:44px}
+  .cta-topo{padding:0 16px}
+}
+
+/* Colunas de grid podem encolher abaixo da largura do conteúdo (senão um botão longo alarga a página),
+   e no celular os botões quebram linha em vez de estourar */
+.mapa-grid > *,.sobre-grid > *,.produtos-grid > *,.contato-grid > *{min-width:0}
+@media (max-width:720px){
+  .btn{white-space:normal;text-align:center}
+}
+
+/* Rodapé no tablet e no celular */
+@media (max-width:980px){
+  .rodape-dados{grid-template-columns:1fr 1fr}
+}
+@media (max-width:720px){
+  .rodape-topo{padding:48px 0 32px}
+  .rodape-cta{width:100%}
+  footer.rodape .base{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:420px){
+  .rodape-dados{grid-template-columns:1fr}
+  .rodape-dados div{padding-bottom:18px}
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel administrativo | Gelo Jamp</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="admin">
+
+  <!-- LOGIN -->
+  <div class="login-fundo" id="tela-login" style="display:grid">
+    <div class="login-caixa">
+      <picture><source srcset="img/logo-gelo-jamp.webp" type="image/webp"><img class="logo-top" src="img/logo-gelo-jamp.jpeg" alt="Logotipo Gelo Jamp" width="1200" height="900"></picture>
+      <h1>Painel Gelo Jamp</h1>
+      <p class="sub">Acesso restrito. Gerencie produtos, galeria e pedidos.</p>
+      <div class="login-erro" id="login-erro" role="alert"></div>
+      <form id="form-login">
+        <div class="form-linha">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" name="email" spellcheck="false" placeholder="nome@exemplo.com" required autocomplete="username">
+        </div>
+        <div class="form-linha">
+          <label for="login-senha">Senha</label>
+          <input type="password" id="login-senha" name="senha" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-gelo btn-full">Entrar</button>
+      </form>
+      <p style="text-align:center;margin-top:16px;font-size:.85rem"><a href="index.html" style="color:var(--claro);font-weight:700">← Voltar ao site</a></p>
+    </div>
+  </div>
+
+  <!-- PAINEL -->
+  <div class="admin-body" id="tela-painel" style="display:none">
+    <aside class="admin-lateral">
+      <a class="marca" href="index.html">
+        <picture><source srcset="img/logo-gelo-jamp-112.webp" type="image/webp"><img src="img/logo-gelo-jamp-112.jpeg" alt="" width="56" height="56"></picture>
+        <div><div class="nome">Gelo Jamp</div><div class="sub">Administração</div></div>
+      </a>
+      <nav aria-label="Seções do painel">
+        <button type="button" data-secao-btn="dashboard" class="ativo" aria-label="Painel"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span>Painel</span></button>
+        <button type="button" data-secao-btn="produtos" aria-label="Produtos"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Produtos</span></button>
+        <button type="button" data-secao-btn="galeria" aria-label="Galeria"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg><span>Galeria</span></button>
+        <button type="button" data-secao-btn="pedidos" aria-label="Pedidos"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg><span>Pedidos</span></button>
+        <button type="button" data-secao-btn="configuracoes" aria-label="Configurações"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg><span>Configurações</span></button>
+      </nav>
+      <div class="rodape-lat">
+        <div class="usuario">
+          <div class="avatar">A</div>
+          <div class="txt"><small>Conectado como</small><strong id="nome-usuario">Administrador</strong><small id="email-usuario"></small></div>
+        </div>
+        <button class="btn-sair" id="btn-sair">Sair</button>
+      </div>
+    </aside>
+    <main class="admin-principal">
+      <div class="admin-topo">
+        <div><h1 id="titulo-secao">Painel</h1><p id="subtitulo-secao">Visão geral da Gelo Jamp</p></div>
+        <a class="btn btn-outline btn-mini" href="index.html" target="_blank" rel="noopener">Ver site</a>
+      </div>
+
+      <div class="secao-admin ativa" id="secao-dashboard">
+        <div class="stats">
+          <div class="stat"><small>Produtos</small><strong id="stat-produtos">–</strong></div>
+          <div class="stat"><small>Destaques</small><strong id="stat-destaques">–</strong></div>
+          <div class="stat"><small>Pedidos novos</small><strong id="stat-novos">–</strong></div>
+          <div class="stat"><small>Fotos na galeria</small><strong id="stat-fotos">–</strong></div>
+        </div>
+        <div class="caixa">
+          <h2>Últimos pedidos</h2>
+          <table class="tabela"><thead><tr><th>Data</th><th>Cliente</th><th>Produto</th><th>Status</th></tr></thead><tbody id="tabela-ultimos"><tr><td colspan="4" style="color:var(--texto-suave);padding:18px">Carregando pedidos…</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <div class="secao-admin" id="secao-produtos">
+        <div class="caixa">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap">
+            <h2 style="margin:0">Produtos cadastrados</h2>
+            <button class="btn btn-gelo btn-mini" id="btn-novo-produto">Novo produto</button>
+          </div>
+          <table class="tabela"><thead><tr><th>Foto</th><th>Produto</th><th>Preço</th><th>Destaque</th><th>Ativo</th><th style="text-align:right">Ações</th></tr></thead><tbody id="tabela-produtos"></tbody></table>
+        </div>
+      </div>
+
+      <div class="secao-admin" id="secao-galeria">
+        <div class="caixa">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap">
+            <h2 style="margin:0">Fotos da galeria</h2>
+            <button class="btn btn-gelo btn-mini" id="btn-nova-foto">Nova foto</button>
+          </div>
+          <div class="galeria-admin" id="grade-galeria-admin"></div>
+        </div>
+      </div>
+
+      <div class="secao-admin" id="secao-pedidos">
+        <div class="caixa">
+          <h2>Pedidos registrados</h2>
+          <table class="tabela"><thead><tr><th>Data</th><th>Cliente</th><th>Produto</th><th>Status</th><th style="text-align:right">Ações</th></tr></thead><tbody id="tabela-pedidos"></tbody></table>
+        </div>
+      </div>
+
+      <div class="secao-admin" id="secao-configuracoes">
+        <div class="caixa" style="max-width:680px">
+          <h2>Informações do site</h2>
+          <form id="form-config">
+            <div class="form-linha"><label for="cfg-nome">Nome da empresa</label><input type="text" id="cfg-nome" name="cfg-nome" autocomplete="off" placeholder="Gelo Jamp…"></div>
+            <div class="form-linha"><label for="cfg-endereco">Endereço</label><input type="text" id="cfg-endereco" name="cfg-endereco" autocomplete="off" placeholder="Rua Belo Horizonte, 87, Centro…"></div>
+            <div class="form-linha"><label for="cfg-cidade">Cidade / Estado</label><input type="text" id="cfg-cidade" name="cfg-cidade" autocomplete="off" placeholder="Jampruca - MG…"></div>
+            <div class="form-linha"><label for="cfg-regiao">Região de entrega</label><input type="text" id="cfg-regiao" name="cfg-regiao" autocomplete="off" placeholder="Jampruca e região…"></div>
+            <div class="form-linha"><label for="cfg-whats-display">WhatsApp</label><input type="tel" id="cfg-whats-display" name="cfg-whats-display" autocomplete="off" inputmode="tel" placeholder="33 98704-6287…" aria-describedby="cfg-whats-display-ajuda cfg-whats-display-erro"><small class="ajuda" id="cfg-whats-display-ajuda">Com DDD. É o número dos botões de pedido e do que aparece no site.</small><p class="erro-campo" id="cfg-whats-display-erro" hidden></p></div>
+            <div class="form-linha"><label for="cfg-insta">Instagram</label><input type="text" id="cfg-insta" name="cfg-insta" autocomplete="off" spellcheck="false" placeholder="@gelo.jamp…" aria-describedby="cfg-insta-ajuda cfg-insta-erro"><small class="ajuda" id="cfg-insta-ajuda">Pode ser o perfil (@gelo.jamp) ou o link.</small><p class="erro-campo" id="cfg-insta-erro" hidden></p></div>
+            <div class="form-linha"><label for="cfg-slogan">Slogan</label><input type="text" id="cfg-slogan" name="cfg-slogan" autocomplete="off" placeholder="Qualidade e frescor para seus melhores momentos…"></div>
+            <div class="caixa-acao"><button type="submit" class="btn btn-gelo">Salvar configurações</button></div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL PRODUTO -->
+  <div class="modal" id="modal-produto"><div class="janela" role="dialog" aria-modal="true" aria-labelledby="modal-produto-titulo"><h2 id="modal-produto-titulo">Produto</h2><form id="form-produto">
+    <div class="form-linha"><label for="mp-nome">Nome</label><input type="text" id="mp-nome" name="mp-nome" autocomplete="off" required></div>
+    <div class="form-linha"><label for="mp-peso">Peso / embalagem</label><input type="text" id="mp-peso" name="mp-peso" autocomplete="off" placeholder="5 kg…" aria-describedby="mp-peso-ajuda"><small class="ajuda" id="mp-peso-ajuda">Aparece em destaque no card e na mensagem do WhatsApp.</small></div>
+    <div class="form-linha"><label for="mp-preco">Preço (opcional)</label><input type="text" id="mp-preco" name="mp-preco" autocomplete="off" inputmode="decimal" placeholder="18,00…" aria-describedby="mp-preco-ajuda mp-preco-erro"><small class="ajuda" id="mp-preco-ajuda">Em branco, o site mostra “Consulte preço”.</small><p class="erro-campo" id="mp-preco-erro" hidden></p></div>
+    <div class="form-linha"><label for="mp-descricao">Descrição</label><textarea id="mp-descricao" name="mp-descricao" autocomplete="off" rows="3"></textarea></div>
+    <div class="form-linha"><label for="mp-imagem">Imagem</label><div class="campo-imagem"><img class="previa-imagem" id="mp-imagem-previa" alt="" width="64" height="64"><input type="text" id="mp-imagem" name="mp-imagem" autocomplete="off" spellcheck="false" list="lista-imagens" placeholder="Escolha da lista…" aria-describedby="mp-imagem-ajuda mp-imagem-erro"></div><small class="ajuda" id="mp-imagem-ajuda">Escolha uma foto da lista ou cole um endereço https://.</small><p class="erro-campo" id="mp-imagem-erro" hidden></p></div>
+    <div class="grupo-checks">
+      <label class="form-check" for="mp-destaque"><input type="checkbox" id="mp-destaque" aria-describedby="mp-destaque-ajuda"><span>Destacar na página inicial<small class="ajuda" id="mp-destaque-ajuda">Aparecem até 3, os mais recentes.</small></span></label>
+      <label class="form-check" for="mp-ativo"><input type="checkbox" id="mp-ativo" checked><span>Mostrar no site</span></label>
+    </div>
+    <div class="caixa-acao"><button type="button" class="btn btn-outline btn-mini" data-fechar="modal-produto">Cancelar</button><button type="submit" class="btn btn-gelo btn-mini">Salvar produto</button></div>
+  </form></div></div>
+
+  <!-- MODAL FOTO -->
+  <div class="modal" id="modal-foto"><div class="janela" role="dialog" aria-modal="true" aria-labelledby="modal-foto-titulo"><h2 id="modal-foto-titulo">Foto</h2><form id="form-foto">
+    <div class="form-linha"><label for="mg-titulo">Título</label><input type="text" id="mg-titulo" name="mg-titulo" autocomplete="off" required></div>
+    <div class="form-linha"><label for="mg-categoria">Categoria</label><input type="text" id="mg-categoria" name="mg-categoria" autocomplete="off" list="lista-categorias" placeholder="Produtos…" aria-describedby="mg-categoria-ajuda"><small class="ajuda" id="mg-categoria-ajuda">Vira um filtro na galeria. Reaproveite uma categoria existente.</small></div>
+    <div class="form-linha"><label for="mg-imagem">Imagem</label><div class="campo-imagem"><img class="previa-imagem" id="mg-imagem-previa" alt="" width="64" height="64"><input type="text" id="mg-imagem" name="mg-imagem" autocomplete="off" spellcheck="false" list="lista-imagens" placeholder="Escolha da lista…" aria-describedby="mg-imagem-erro"></div><p class="erro-campo" id="mg-imagem-erro" hidden></p></div>
+    <label class="form-check" for="mg-ativa"><input type="checkbox" id="mg-ativa" checked><span>Mostrar na galeria</span></label>
+    <div class="caixa-acao"><button type="button" class="btn btn-outline btn-mini" data-fechar="modal-foto">Cancelar</button><button type="submit" class="btn btn-gelo btn-mini">Salvar foto</button></div>
+  </form></div></div>
+
+  <datalist id="lista-imagens">
+    <option value="img/gelo-5kg.jpeg">Saco de gelo 5 kg</option>
+    <option value="img/gelo-10kg.jpeg">Saco de gelo 10 kg</option>
+    <option value="img/cooler-gelo-jamp.jpeg">Cooler Gelo Jamp</option>
+    <option value="img/estrutura-freezer.jpeg">Freezer com gelo</option>
+    <option value="img/logo-gelo-jamp.jpeg">Logotipo</option>
+  </datalist>
+  <datalist id="lista-categorias"></datalist>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="js/admin.js"></script>
+</body>
+</html>

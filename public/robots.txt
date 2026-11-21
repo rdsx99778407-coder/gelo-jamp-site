@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /.netlify/
+
+Sitemap: https://gelojamp.com.br/sitemap.xml
